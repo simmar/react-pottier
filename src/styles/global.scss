@@ -19,19 +19,62 @@ body {
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-      monospace;
-  }
-  .search-form {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.search-form {
     position: relative;
     border-bottom: 2px solid rgba(255,255,255,.3);
 }
+
 .search-input {
   border: 0;
   background: 0 0;
   font-size: 2.4rem;
   outline: 0;
 }
+
 img {
     // max-width: 250px;
+    .colunms {
+        &.book-title {
+            display: flex;
+        }
+    }
+}
+
+// cart content
+
+.fieldset {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 10px 0;
+    justify-content: space-between;
+}
+
+tr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid grey; 
+}
+
+tr td:first-child {
+    width: 10%;
+}
+
+.book-title {
+    width: 20%;
+}
+.spacer {
+    width: 16%;
+}
+
+.is-justified-end {
+    justify-content: flex-end;
+}
+
+.table td, .table th {
+    border: 0;
+    border-width: 0;
 }

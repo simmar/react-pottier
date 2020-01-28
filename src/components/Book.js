@@ -6,6 +6,13 @@ const Book = props => {
       <div>{props.book.title}</div>
       <img src={props.book.cover} alt={props.book.title} />
       <div>{props.book.price} €</div>
+      <button
+        onClick={() => {
+          props.onCaddyAdded (props.book);
+        }}
+      >
+        Ajouter au panier
+      </button>
     </div>
   );
 };
