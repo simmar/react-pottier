@@ -7,14 +7,14 @@ class Search extends Component {
 
   render () {
     return (
-      <form className="field">
-        <div className="control has-icons-left">
+      <form className="field columns">
+        <div className="column control has-icons-left is-half ">
           <input
-            type="text"
+            class="input"
+            type="email"
             placeholder="Search your books"
             onChange={this.handleInputChange}
           />
-          <span class="icon is-small is-left"><i class="fas fa-search" /></span>
         </div>
       </form>
     );
