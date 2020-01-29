@@ -10,8 +10,8 @@ class Search extends Component {
       <form className="field columns">
         <div className="column control has-icons-left is-half ">
           <input
-            class="input"
-            type="email"
+            className="input"
+            type="text"
             placeholder="Search your books"
             onChange={this.handleInputChange}
           />

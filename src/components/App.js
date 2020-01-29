@@ -81,7 +81,7 @@ class App extends React.Component {
                   />
                   <BookList
                     books={this.state.filteredBooks}
-                    onSearchChange={this.handleSearchChange.bind (this)}
+                    // onSearchChange={this.handleSearchChange.bind (this)}
                     onCaddyAdded={book => {
                       let bookExists = this.state.caddy.find (
                         item => item.book.isbn === book.isbn
@@ -96,7 +96,6 @@ class App extends React.Component {
                             caddy: [...this.state.caddy],
                           },
                           () => {
-                            console.log (this.state);
                             this.saveStateToLocalStorage ();
                           }
                         );

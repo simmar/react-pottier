@@ -48,8 +48,8 @@ class Cart extends Component {
                 <td>
                   <img src={item.book.cover} alt={item.book.title} />
                 </td>
-                <th className="book-title">{item.book.title}</th>
-                <th>{item.quantity}</th>
+                <td className="book-title">{item.book.title}</td>
+                <td>{item.quantity}</td>
                 <td>{item.book.price} <span>€</span></td>
                 <td>
                   {item.book.price * item.quantity}

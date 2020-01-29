@@ -3,7 +3,7 @@ import Book from './Book';
 
 const BookList = props => {
   return (
-    <div className="columns">
+    <div className="columns is-multiline">
       {props.books.map (book => (
         <Book
           book={book}
