@@ -3,15 +3,33 @@ import {Link} from 'react-router-dom';
 
 const Header = props => {
   return (
-    <div className="has-text-centered">
-      <h1>Want more</h1>
-      {props.children}
-      <Link to="/cart">
-        Caddy (
-        {props.caddy.reduce ((total, current) => total + current.quantity, 0)}
-        )
-      </Link>
-    </div>
+    <header>
+      <nav
+        className="navbar is-light"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div className="navbar-brand">
+          <Link to="/" className="navbar-item">
+            HARRY POTTIER
+          </Link>
+        </div>
+
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <Link to="/cart" className="button is-primary">
+              Caddy (
+              {props.caddy.reduce (
+                (total, current) => total + current.quantity,
+                0
+              )}
+              )
+            </Link>
+          </div>
+        </div>
+
+      </nav>
+    </header>
   );
 };
 

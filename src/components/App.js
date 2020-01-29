@@ -50,67 +50,72 @@ class App extends React.Component {
       <React.Fragment>
 
         <Router>
-          <Header caddy={this.state.caddy}>HARRY POTTIER</Header>
-
-          <div className="section container">
-
-            <Switch>
-
-              <Route path="/Cart">
-                <Cart
-                  caddy={this.state.caddy}
-                  offers={this.state.offers}
-                  onDelete={item => {
-                    this.setState (
-                      {
-                        ...this.state,
-                        caddy: this.state.caddy.filter (
-                          caddyItem => caddyItem !== item
-                        ),
-                      },
-                      this.saveStateToLocalStorage
-                    );
-                  }}
-                />
-              </Route>
-
-              <Route path="/">
-                <Search onSearchChange={this.handleSearchChange.bind (this)} />
-                <BookList
-                  books={this.state.filteredBooks}
-                  onSearchChange={this.handleSearchChange.bind (this)}
-                  onCaddyAdded={book => {
-                    let bookExists = this.state.caddy.find (
-                      item => item.book.isbn === book.isbn
-                    );
-
-                    if (bookExists) {
-                      bookExists.quantity++;
-
+          <div className="container">
+            <Header
+              className="navbar has-background-black-ter"
+              caddy={this.state.caddy}
+            />
+            <div className="section">
+              <Switch>
+                <Route path="/Cart">
+                  <Cart
+                    caddy={this.state.caddy}
+                    offers={this.state.offers}
+                    onDelete={item => {
                       this.setState (
                         {
                           ...this.state,
-                          caddy: [...this.state.caddy],
-                        },
-                        () => {
-                          console.log (this.state);
-                          this.saveStateToLocalStorage ();
-                        }
-                      );
-                    } else {
-                      this.setState (
-                        {
-                          ...this.state,
-                          caddy: [...this.state.caddy, {book, quantity: 1}],
+                          caddy: this.state.caddy.filter (
+                            caddyItem => caddyItem !== item
+                          ),
                         },
                         this.saveStateToLocalStorage
                       );
-                    }
-                  }}
-                />
-              </Route>
+                    }}
+                  />
+                </Route>
 
-            </Switch>
+                <Route path="/">
+                  <Search
+                    onSearchChange={this.handleSearchChange.bind (this)}
+                  />
+                  <BookList
+                    books={this.state.filteredBooks}
+                    onSearchChange={this.handleSearchChange.bind (this)}
+                    onCaddyAdded={book => {
+                      let bookExists = this.state.caddy.find (
+                        item => item.book.isbn === book.isbn
+                      );
+
+                      if (bookExists) {
+                        bookExists.quantity++;
+
+                        this.setState (
+                          {
+                            ...this.state,
+                            caddy: [...this.state.caddy],
+                          },
+                          () => {
+                            console.log (this.state);
+                            this.saveStateToLocalStorage ();
+                          }
+                        );
+                      } else {
+                        this.setState (
+                          {
+                            ...this.state,
+                            caddy: [...this.state.caddy, {book, quantity: 1}],
+                          },
+                          this.saveStateToLocalStorage
+                        );
+                      }
+                    }}
+                  />
+                </Route>
+
+              </Switch>
+            </div>
+
           </div>
         </Router>
 

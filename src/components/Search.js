@@ -7,14 +7,16 @@ class Search extends Component {
 
   render () {
     return (
-      <div className="searchForm">
-        <form>
+      <form className="field">
+        <div className="control has-icons-left">
           <input
-            placeholder="Search for..."
+            type="text"
+            placeholder="Search your books"
             onChange={this.handleInputChange}
           />
-        </form>
-      </div>
+          <span class="icon is-small is-left"><i class="fas fa-search" /></span>
+        </div>
+      </form>
     );
   }
 }
