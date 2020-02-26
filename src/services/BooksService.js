@@ -1,4 +1,5 @@
 const collection = [];
+const commercialOffers = [];
 
 const endPoint = 'http://henri-potier.xebia.fr/books';
 
@@ -11,5 +12,22 @@ export class BookService {
 
       return collection;
     });
+  }
+
+  //return en fonction des urls (avec différents isbn) les offres
+  static getDataOffers (productsIds) {
+    console.log (productsIds, 'productsIds');
+    const route = `/${productsIds}/commercialOffers`;
+
+    console.log (endPoint + route, 'route');
+
+    return fetch (endPoint + route)
+      .then (res => res.json ())
+      .then (dataFromAPI => {
+        commercialOffers.length = 0;
+        commercialOffers.push (...dataFromAPI.offers);
+
+        return commercialOffers;
+      });
   }
 }

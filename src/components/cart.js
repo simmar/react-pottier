@@ -1,7 +1,26 @@
 import React, {Component} from 'react';
+import {BookService} from '../services/BooksService';
 
 class Cart extends Component {
   componentDidMount () {}
+
+  getTotal () {
+    let total = 0;
+    this.props.caddy.map (item => {
+      total = total + item.book.price * item.quantity;
+    });
+    this.getBestOffers ();
+    return total;
+  }
+
+  // get back all isbn in the caddy and join them
+  getBestOffers () {
+    let isbns = this.props.caddy.map (item => item.book.isbn);
+    isbns = isbns.join (',');
+
+    let bestOffers = BookService.getDataOffers (isbns);
+    console.log ('BO', bestOffers);
+  }
 
   render () {
     return (
@@ -10,35 +29,57 @@ class Cart extends Component {
         <table className="table is-hoverable is-fullwidth">
           <thead>
             <tr>
-              <th>Product</th>
-              <th />
-              <th className="has-text-centered">Title</th>
-              <th />
-              <th>Quantity</th>
-              <th className="has-text-right">
-                Unit Price
+              <th>
+                <abbr title="Product">Product</abbr>
               </th>
-              <th className="has-text-right">
-                Total Price
+              <th>
+                <abbr title="title">title</abbr>
+              </th>
+              <th className="has-text-centered">
+                <abbr title="Quantity">Quantity</abbr>
+              </th>
+              <th className="has-text-centered">
+                <abbr title="Price">Unit Price</abbr>
+              </th>
+              <th className="has-text-centered">
+                <abbr title="Total Price">Total Price</abbr>
               </th>
               <th />
             </tr>
           </thead>
 
           <tfoot>
-            <tr className="is-justified-end">
+            <tr>
               <th />
               <th />
-              <th className="has-text-right">
-                {this.props.caddy.reduce ((total, item) => {
-                  console.log (total, item);
+              <th />
+              <th className="has-text-centered">
+                Total
 
-                  return total + item.book.price * item.quantity;
-                }, 0)}
-                &nbsp;
-                <span>€</span>
+                {this.getTotal ()}
               </th>
-              <th className="spacer" />
+              <th className="has-text-centered">€</th>
+              <th className="has-text-centered" />
+            </tr>
+            <tr>
+              <th />
+              <th />
+              <th />
+              <th className="has-text-centered">
+                Reduction
+              </th>
+              <th className="has-text-centered">€</th>
+              <th className="has-text-centered" />
+            </tr>
+            <tr>
+              <th />
+              <th />
+              <th />
+              <th className="has-text-centered">
+                Total before reduction
+              </th>
+              <th className="has-text-centered">€</th>
+              <th className="has-text-centered" />
             </tr>
           </tfoot>
 
@@ -48,8 +89,8 @@ class Cart extends Component {
                 <td>
                   <img src={item.book.cover} alt={item.book.title} />
                 </td>
-                <td className="book-title">{item.book.title}</td>
-                <td>{item.quantity}</td>
+                <th className="book-title">{item.book.title}</th>
+                <td className="has-text-center">{item.quantity}</td>
                 <td>{item.book.price} <span>€</span></td>
                 <td>
                   {item.book.price * item.quantity}
@@ -65,6 +106,7 @@ class Cart extends Component {
           </tbody>
 
         </table>
+
       </section>
     );
   }

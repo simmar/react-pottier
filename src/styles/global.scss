@@ -43,20 +43,24 @@ img {
     justify-content: space-between;
 }
 
-tr {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid grey; 
-}
 
-tr td:first-child {
-    width: 10%;
+table td:not([align]), table th:not([align]) {
+    text-align: center;
 }
-
 .table {
+    tr {
+        border-bottom: 1px solid grey; 
+    }
+    
+    tr td:first-child {
+        width: 10%;
+    }
+
+    th, td {
+        vertical-align: middle;
+    }
     .book-title {
-        width: 20%;
+        width: 30%;
     }
 }
 .book-title {

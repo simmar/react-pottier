@@ -9,17 +9,23 @@ import Search from './Search';
 
 class App extends React.Component {
   service = BookService;
+  serviceOffers = BookService;
 
   state = {
     books: [],
     filteredBooks: [],
     caddy: [],
+    offers: [],
   };
 
   componentDidMount () {
     this.service
       .getData ()
       .then (data => this.setState ({books: data, filteredBooks: data}));
+
+    this.serviceOffers
+      .getDataOffers ()
+      .then (data => this.setState ({offers: data}));
 
     if (localStorage.getItem ('henri-potier-caddy')) {
       this.setState ({
