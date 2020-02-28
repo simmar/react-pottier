@@ -48,6 +48,9 @@ table td:not([align]), table th:not([align]) {
     text-align: center;
 }
 .table {
+    abbr {
+        text-decoration: none;
+    }
     tr {
         border-bottom: 1px solid grey; 
     }

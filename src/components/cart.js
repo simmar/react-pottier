@@ -2,24 +2,72 @@ import React, {Component} from 'react';
 import {BookService} from '../services/BooksService';
 
 class Cart extends Component {
-  componentDidMount () {}
+  state = {
+    total: 0,
+    bestOffer: 0,
+  };
+
+  componentDidMount () {
+    this.getTotal ();
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.caddy.length !== this.props.caddy.length) {
+      this.getTotal ();
+    }
+  }
 
   getTotal () {
-    let total = 0;
+    let totalPrice = 0;
+
     this.props.caddy.map (item => {
-      total = total + item.book.price * item.quantity;
+      totalPrice += item.book.price * item.quantity;
     });
+    this.setState ({total: totalPrice}, () => this.getBestOffers);
     this.getBestOffers ();
-    return total;
   }
 
   // get back all isbn in the caddy and join them
   getBestOffers () {
+    if (this.props.caddy.length === 0) {
+      this.setState ({bestOffer: 0});
+      return;
+    }
     let isbns = this.props.caddy.map (item => item.book.isbn);
     isbns = isbns.join (',');
 
-    let bestOffers = BookService.getDataOffers (isbns);
-    console.log ('BO', bestOffers);
+    BookService.getDataOffers (isbns).then (offers => {
+      // let offersData = offers.map (offer => offer.type);
+
+      let reductions = offers.map (offer => {
+        switch (offer.type) {
+          case 'percentage': {
+            return this.state.total * (offer.value / 100);
+          }
+          case 'minus': {
+            return offer.value;
+          }
+          case 'slice': {
+            const nbSlice = Math.floor (this.state.total / offer.sliceValue);
+            return nbSlice * offer.value;
+          }
+          default:
+            console.log ('false');
+        }
+      });
+
+      reductions.sort (function (a, b) {
+        if (a > b) {
+          return -1;
+        }
+        if (b > a) {
+          return 1;
+        }
+        return 0;
+      });
+
+      this.setState ({bestOffer: reductions[0]});
+    });
   }
 
   render () {
@@ -55,10 +103,10 @@ class Cart extends Component {
               <th />
               <th className="has-text-centered">
                 Total
-
-                {this.getTotal ()}
               </th>
-              <th className="has-text-centered">€</th>
+              <th className="has-text-centered">
+                {this.state.total + ' €'}
+              </th>
               <th className="has-text-centered" />
             </tr>
             <tr>
@@ -68,7 +116,9 @@ class Cart extends Component {
               <th className="has-text-centered">
                 Reduction
               </th>
-              <th className="has-text-centered">€</th>
+              <th className="has-text-centered">
+                {this.state.bestOffer + '  €'}
+              </th>
               <th className="has-text-centered" />
             </tr>
             <tr>
@@ -76,9 +126,11 @@ class Cart extends Component {
               <th />
               <th />
               <th className="has-text-centered">
-                Total before reduction
+                Total after reduction
               </th>
-              <th className="has-text-centered">€</th>
+              <th className="has-text-centered">
+                {this.state.total - this.state.bestOffer + ' €'}
+              </th>
               <th className="has-text-centered" />
             </tr>
           </tfoot>

@@ -16,10 +16,7 @@ export class BookService {
 
   //return en fonction des urls (avec différents isbn) les offres
   static getDataOffers (productsIds) {
-    console.log (productsIds, 'productsIds');
     const route = `/${productsIds}/commercialOffers`;
-
-    console.log (endPoint + route, 'route');
 
     return fetch (endPoint + route)
       .then (res => res.json ())

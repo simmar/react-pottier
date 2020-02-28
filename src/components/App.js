@@ -9,23 +9,21 @@ import Search from './Search';
 
 class App extends React.Component {
   service = BookService;
-  serviceOffers = BookService;
 
   state = {
     books: [],
     filteredBooks: [],
     caddy: [],
-    offers: [],
   };
 
   componentDidMount () {
-    this.service
-      .getData ()
-      .then (data => this.setState ({books: data, filteredBooks: data}));
-
-    this.serviceOffers
-      .getDataOffers ()
-      .then (data => this.setState ({offers: data}));
+    this.service.getData ().then (data => {
+      this.setState ({
+        books: data,
+        filteredBooks: data,
+      });
+      //console.log ('data', data);
+    });
 
     if (localStorage.getItem ('henri-potier-caddy')) {
       this.setState ({
@@ -66,7 +64,6 @@ class App extends React.Component {
                 <Route path="/Cart">
                   <Cart
                     caddy={this.state.caddy}
-                    offers={this.state.offers}
                     onDelete={item => {
                       this.setState (
                         {
@@ -87,7 +84,6 @@ class App extends React.Component {
                   />
                   <BookList
                     books={this.state.filteredBooks}
-                    // onSearchChange={this.handleSearchChange.bind (this)}
                     onCaddyAdded={book => {
                       let bookExists = this.state.caddy.find (
                         item => item.book.isbn === book.isbn
